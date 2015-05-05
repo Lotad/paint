@@ -5,6 +5,7 @@ import javax.imageio.*;
 import java.io.*;
 import java.util.*;
 import java.lang.*;
+import javax.swing.JOptionPane;
 
 public class Janela extends JFrame { // implements Cloneable
 
@@ -205,7 +206,7 @@ public class Janela extends JFrame { // implements Cloneable
         btnQuadrado.addActionListener(new DesenhoDeQuadrado());//-------------------------------
         btnRetangulo.addActionListener(new DesenhoDeRetangulo());//-------------------------------
         btnPoligono.addActionListener(new DesenhoDePoligono());
-        //btnEscrita.addActionListener(new CaixaDeEscrita());
+        btnEscrita.addActionListener(new CaixaDeEscrita());
         btnCores.addActionListener(new EscolhaCorContorno());
         btnPreen.addActionListener(new EscolhaCorPreenchimento());
         //btnSair.addActionListener(new FechamentoDeJanela());
@@ -369,7 +370,7 @@ public class Janela extends JFrame { // implements Cloneable
                                                         if (esperaFimRetangulo) {
                                                             esperaFimRetangulo = false;
 
-                                                            figuras.add (new Retangulo(p1.getX(), p1.getY(), e.getX(), e.getY(), corAtual, corAtualPreen));
+                                                            figuras.add (new Retangulo(p1.getX(), p1.getY(), e.getX(), e.getY(), corAtual));
                                                             figuras.get(figuras.size()-1).torneSeVisivel(pnlDesenho.getGraphics());
 
                                                             statusBar1.setText("Mensagem:");    
@@ -580,7 +581,17 @@ public class Janela extends JFrame { // implements Cloneable
             System.exit(0);
         }
     }
+    
 
+    private class CaixaDeEscrita implements ActionListener {
+        public void actionPerformed (ActionEvent e){
+            String texto=null; 
+            texto = JOptionPane.showInputDialog("texto");
+            JOptionPane.showMessageDialog(null, texto);
+            String string1 = new String(texto);
+            System.out.println(string1);
+        }
+    }
   //public Object  clone    ();
   //public         Janela   (Janela modelo);
   //public boolean equals   (Object obj);
