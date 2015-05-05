@@ -6,12 +6,12 @@ public class Quadrado extends Figura {
 	
     public Quadrado (int x1, int y1, int x2, int y2)
     {
-        this (x1, y1, x2, y2, Color.BLACK);
+        this (x1, y1, x2, y2, Color.BLACK, Color.WHITE);
     }
 	
-    public Quadrado (int x1, int y1, int x2, int y2, Color cor)
+    public Quadrado (int x1, int y1, int x2, int y2, Color cor, Color preen)
     {
-        super(cor);
+        super(cor,preen);
 
         this.p1 = new Ponto (x1,y1,cor);
         this.p2 = new Ponto (x2,y2,cor);
@@ -60,9 +60,25 @@ public class Quadrado extends Figura {
 
     public void torneSeVisivel (Graphics g)
     {
+         g.setColor(this.preen);
+        g.drawLine(this.p1.getX(), this.p1.getY(),   // ponto inicial
+                   this.p1.getX(), this.p2.getY());
+        g.drawLine(this.p1.getX(), this.p1.getY(),   // ponto inicial
+                   this.p2.getX(), this.p1.getY());
+        g.drawLine(this.p1.getX(), this.p2.getY(),   // ponto inicial
+                   this.p2.getX(), this.p2.getY());
+        g.drawLine(this.p2.getX(), this.p1.getY(),   // ponto inicial
+                   this.p2.getX(), this.p2.getY());// ponto final
+        
         g.setColor(this.cor);
         g.drawLine(this.p1.getX(), this.p1.getY(),   // ponto inicial
-                   this.p2.getX(), this.p2.getY());  // ponto final
+                   this.p1.getX(), this.p2.getY());
+        g.drawLine(this.p1.getX(), this.p1.getY(),   // ponto inicial
+                   this.p2.getX(), this.p1.getY());
+        g.drawLine(this.p1.getX(), this.p2.getY(),   // ponto inicial
+                   this.p2.getX(), this.p2.getY());
+        g.drawLine(this.p2.getX(), this.p1.getY(),   // ponto inicial
+                   this.p2.getX(), this.p2.getY());// ponto final
     }
 
     public String toString()
