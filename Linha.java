@@ -1,8 +1,7 @@
 import java.awt.*;
 import java.util.*;
 
-public class Linha extends Figura
-{
+public class Linha extends Figura{
     protected Ponto p1, p2;
 	
     public Linha (int x1, int y1, int x2, int y2) {
