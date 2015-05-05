@@ -62,7 +62,13 @@ public class Retangulo extends Figura {
     {
         g.setColor(this.cor);
         g.drawLine(this.p1.getX(), this.p1.getY(),   // ponto inicial
-                   this.p2.getX(), this.p2.getY());  // ponto final
+                   this.p1.getX(), this.p2.getY());
+        g.drawLine(this.p1.getX(), this.p1.getY(),   // ponto inicial
+                   this.p2.getX(), this.p1.getY());
+        g.drawLine(this.p1.getX(), this.p2.getY(),   // ponto inicial
+                   this.p2.getX(), this.p2.getY());
+        g.drawLine(this.p2.getX(), this.p1.getY(),   // ponto inicial
+                   this.p2.getX(), this.p2.getY());// ponto final
     }
 
     public String toString()
