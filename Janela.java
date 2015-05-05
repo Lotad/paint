@@ -205,7 +205,7 @@ public class Janela extends JFrame { // implements Cloneable
         btnQuadrado.addActionListener(new DesenhoDeQuadrado());//-------------------------------
         btnRetangulo.addActionListener(new DesenhoDeRetangulo());//-------------------------------
         btnPoligono.addActionListener(new DesenhoDePoligono());
-        //btnEscrita.addActionListener(new DesenhoDeEscrita());
+        //btnEscrita.addActionListener(new CaixaDeEscrita());
         btnCores.addActionListener(new EscolhaCorContorno());
         btnPreen.addActionListener(new EscolhaCorPreenchimento());
         //btnSair.addActionListener(new FechamentoDeJanela());
@@ -351,7 +351,7 @@ public class Janela extends JFrame { // implements Cloneable
                                                 if (esperaFimQuadrado) {
                                                     esperaFimQuadrado = false;
 
-                                                    figuras.add (new Linha(p1.getX(), p1.getY(), e.getX(), e.getY(), corAtual));
+                                                    figuras.add (new Quadrado(p1.getX(), p1.getY(), e.getX(), e.getY(), corAtual, corAtualPreen));
                                                     figuras.get(figuras.size()-1).torneSeVisivel(pnlDesenho.getGraphics());
 
                                                     statusBar1.setText("Mensagem:");    
@@ -369,7 +369,7 @@ public class Janela extends JFrame { // implements Cloneable
                                                         if (esperaFimRetangulo) {
                                                             esperaFimRetangulo = false;
 
-                                                            figuras.add (new Linha(p1.getX(), p1.getY(), e.getX(), e.getY(), corAtual));
+                                                            figuras.add (new Retangulo(p1.getX(), p1.getY(), e.getX(), e.getY(), corAtual, corAtualPreen));
                                                             figuras.get(figuras.size()-1).torneSeVisivel(pnlDesenho.getGraphics());
 
                                                             statusBar1.setText("Mensagem:");    
