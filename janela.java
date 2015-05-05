@@ -16,6 +16,8 @@ public class Janela extends JFrame { // implements Cloneable
                     btnElipse    = new JButton ("Elipse"),                
                     btnQuadrado  = new JButton ("Quadrado"),//--------------------------------------------
                     btnRetangulo = new JButton ("Retangulo"),//--------------------------------------------
+                    btnPoligono  = new JButton ("Poligono"),//-----------------------------------
+                    btnEscrita   = new JButton ("Escrita"),//----------------------------------
                     btnCores     = new JButton ("Contorno"),
                     btnPreen     = new JButton ("Preenchimento"),
                     btnAbrir     = new JButton ("Abrir"),
@@ -34,7 +36,8 @@ public class Janela extends JFrame { // implements Cloneable
             esperaInicioCirculo, esperaFimCirculo,
             esperaInicioElipse, esperaFimElipse, esperaFim2Elipse,
             esperaInicioQuadrado, esperaFimQuadrado,
-            esperaInicioRetangulo, esperaFimRetangulo;
+            esperaInicioRetangulo, esperaFimRetangulo,
+            esperaInicioPoligono, esperaFimPoligono;
 
     private Color corAtual = Color.black;
     private Color corAtualPreen = Color.white;
@@ -111,6 +114,26 @@ public class Janela extends JFrame { // implements Cloneable
         }//----------------------------------------------------------------------------------------------------------
 
         try {
+            Image btnPoligonoImg = ImageIO.read(getClass().getResource("resources/poligono.jpg"));
+            btnPoligono.setIcon(new ImageIcon(btnPoligonoImg));
+        }
+        catch (IOException e) {
+            JOptionPane.showMessageDialog (null,
+                                           "Arquivo poligono.jpg não foi encontrado",
+                                           "Arquivo de imagem ausente",
+                                           JOptionPane.WARNING_MESSAGE);
+        }
+        try {
+            Image btnEscritaImg = ImageIO.read(getClass().getResource("resources/escrita.jpg"));
+            btnEscrita.setIcon(new ImageIcon(btnEscritaImg));
+        }
+        catch (IOException e) {
+            JOptionPane.showMessageDialog (null,
+                                           "Arquivo escrita.jpg não foi encontrado",
+                                           "Arquivo de imagem ausente",
+                                           JOptionPane.WARNING_MESSAGE);
+        }//----------------------------------------------------------------------------------------------------
+        try {
             Image btnCoresImg = ImageIO.read(getClass().getResource("resources/cores.jpg"));
             btnCores.setIcon(new ImageIcon(btnCoresImg));
         }
@@ -181,6 +204,8 @@ public class Janela extends JFrame { // implements Cloneable
         btnElipse.addActionListener(new DesenhoDeElipse());
         btnQuadrado.addActionListener(new DesenhoDeQuadrado());//-------------------------------
         btnRetangulo.addActionListener(new DesenhoDeRetangulo());//-------------------------------
+        btnPoligono.addActionListener(new DesenhoDePoligono());
+        //btnEscrita.addActionListener(new DesenhoDeEscrita());
         btnCores.addActionListener(new EscolhaCorContorno());
         btnPreen.addActionListener(new EscolhaCorPreenchimento());
         //btnSair.addActionListener(new FechamentoDeJanela());
@@ -197,6 +222,8 @@ public class Janela extends JFrame { // implements Cloneable
         pnlBotoes.add (btnElipse);
         pnlBotoes.add (btnQuadrado);
         pnlBotoes.add (btnRetangulo);
+        pnlBotoes.add (btnPoligono);
+        pnlBotoes.add (btnEscrita);
         pnlBotoes.add (btnCores);
         pnlBotoes.add (btnPreen);
         pnlBotoes.add (btnApagar);
@@ -347,6 +374,24 @@ public class Janela extends JFrame { // implements Cloneable
 
                                                             statusBar1.setText("Mensagem:");    
                                                         }//-------------------------------------------------------
+                                                        else//---------------------------------------------------
+                                                            if (esperaInicioPoligono) {
+                                                                esperaInicioPoligono = false;
+                                                                esperaFimPoligono = true;
+
+                                                                p1 = new Ponto (e.getX(), e.getY(), corAtual);
+
+                                                                statusBar1.setText("Mensagem: clique o ponto final do poligono");    
+                                                            }
+                                                            else
+                                                                if (esperaFimPoligono) {
+                                                                    esperaFimPoligono = false;
+
+                                                                    figuras.add (new Linha(p1.getX(), p1.getY(), e.getX(), e.getY(), corAtual));
+                                                                    figuras.get(figuras.size()-1).torneSeVisivel(pnlDesenho.getGraphics());
+
+                                                                    statusBar1.setText("Mensagem:");    
+                                                                }//-------------------------------------------------------
         }
         
         public void mouseReleased (MouseEvent e) {
@@ -383,6 +428,8 @@ public class Janela extends JFrame { // implements Cloneable
             esperaFimQuadrado = false;
             esperaInicioRetangulo = false;
             esperaFimRetangulo = false;
+            esperaInicioPoligono = false;
+            esperaFimPoligono = false;
 
             statusBar1.setText("Mensagem: clique o local do ponto desejado");
         }
@@ -402,6 +449,8 @@ public class Janela extends JFrame { // implements Cloneable
             esperaFimQuadrado = false;
             esperaInicioRetangulo = false;
             esperaFimRetangulo = false;
+            esperaInicioPoligono = false;
+            esperaFimPoligono = false;
 
             statusBar1.setText("Mensagem: clique o ponto inicial da reta");
         }
@@ -421,6 +470,8 @@ public class Janela extends JFrame { // implements Cloneable
             esperaFimQuadrado = false;
             esperaInicioRetangulo = false;
             esperaFimRetangulo = false;
+            esperaInicioPoligono = false;
+            esperaFimPoligono = false;
 
             statusBar1.setText("Mensagem: clique o ponto central do circulo");
         }
@@ -439,7 +490,9 @@ public class Janela extends JFrame { // implements Cloneable
             esperaInicioQuadrado = false;
             esperaFimQuadrado = false;
             esperaInicioRetangulo = false;
-            esperaFimRetangulo = false;
+            esperaFimRetangulo = false;         
+            esperaInicioPoligono = false;
+            esperaFimPoligono = false;
 
             statusBar1.setText("Mensagem: clique o ponto central da Elipse");
         }
@@ -457,7 +510,9 @@ public class Janela extends JFrame { // implements Cloneable
             esperaInicioQuadrado = true;
             esperaFimQuadrado = false;
             esperaInicioRetangulo = false;
-            esperaFimRetangulo = false;
+            esperaFimRetangulo = false;     
+            esperaInicioPoligono = false;
+            esperaFimPoligono = false;
             
 
             statusBar1.setText("Mensagem: clique o ponto central da quadrado");
@@ -476,7 +531,29 @@ public class Janela extends JFrame { // implements Cloneable
             esperaInicioQuadrado = false;
             esperaFimQuadrado = false;
             esperaInicioRetangulo = true;
-            esperaFimRetangulo = false;
+            esperaFimRetangulo = false; 
+            esperaInicioPoligono = false;
+            esperaFimPoligono = false;
+
+            statusBar1.setText("Mensagem: clique o ponto central da retangulo");
+        }
+    }//----------------------------------------------------------------------------
+     private class DesenhoDePoligono implements ActionListener {
+        public void actionPerformed (ActionEvent e) {
+            esperaPonto      = false;
+            esperaInicioReta = false;
+            esperaFimReta    = false;
+            esperaInicioCirculo = false;
+            esperaFimCirculo = false;
+            esperaInicioElipse = false;
+            esperaFimElipse = false;
+            esperaFim2Elipse = false;
+            esperaInicioQuadrado = false;
+            esperaFimQuadrado = false;
+            esperaInicioRetangulo = false;
+            esperaFimRetangulo = false; 
+            esperaInicioPoligono = true;
+            esperaFimPoligono = false;
 
             statusBar1.setText("Mensagem: clique o ponto central da retangulo");
         }
